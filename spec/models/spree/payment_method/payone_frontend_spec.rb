@@ -1,10 +1,11 @@
 require 'spec_helper'
 
-describe Spree::Order do
+describe Spree::PaymentMethod::PayoneFrontend do
 
 	before(:each) do
 		@order = FactoryGirl.create(:order)
 		@payment_method = FactoryGirl.create(:payment_method)
+		@payment = FactoryGirl.create(:payment, order: @order, payment_method: @payment_method)
 	end	
 
 #-------------------------------------------------------------------------------------------------
@@ -30,6 +31,7 @@ describe Spree::Order do
 #-------------------------------------------------------------------------------------------------
 
 	after(:each) do
+		@payment.destroy
 		@order.destroy
 		@payment_method.destroy
 	end	
