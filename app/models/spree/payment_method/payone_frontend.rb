@@ -1,5 +1,5 @@
 module Spree
-	class PaymentMethod::PayoneFrontend < PaymentMethod
+	class PaymentMethod::PayoneFrontend < PaymentMethod::Check
   		preference :mode, :string  #live or test
   		preference :secret_key, :string # key from payone backend
   		preference :portal_id, :string # portal id from payone backend
@@ -15,39 +15,6 @@ module Spree
   		preference :request, :string, :default => "authorization"
   		preference :target_window, :string, :default => "top"
 
-		
-		# Preferences accessors
-#    	attr_accessible :preferred_mode, :preferred_secret_key, :preferred_portal_id, :preferred_sub_account_id,
-#    					:preferred_url_prefix, :preferred_clearing_type, :preferred_currency, 
-#    					:preferred_display_address, :preferred_display_name, :preferred_encoding, 
-#    					:preferred_request, :preferred_target_window
-
-		#--------------------------------------------------------------------------------------------------------------
-	    def actions
-	      %w{capture void}
-	    end
-
-	    # Indicates whether its possible to capture the payment
-	    def can_capture?(payment)
-	      ['checkout', 'pending'].include?(payment.state)
-	    end
-
-	    # Indicates whether its possible to void the payment.
-	    def can_void?(payment)
-	      payment.state != 'void'
-	    end
-
-	    def capture(*args)
-	      ActiveMerchant::Billing::Response.new(true, "", {}, {})
-	    end
-
-	    def void(*args)
-	      ActiveMerchant::Billing::Response.new(true, "", {}, {})
-	    end
-
-	    def source_required?
-	      false
-	    end
 		#--------------------------------------------------------------------------------------------------------------
 		# build the exit param for payone to be returned to identify the order
 		def build_payone_exit_param order
