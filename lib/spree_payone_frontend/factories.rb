@@ -1,6 +1,10 @@
 FactoryGirl.define do
-  # Define your Spree extensions Factories within this file to enable applications, and other extensions to use and override them.
-  #
-  # Example adding this to your spec_helper will load these Factories for use:
-  # require 'spree_payone_frontend/factories'
+
+  factory :payone_frontend, class: Spree::PaymentMethod::PayoneFrontend do
+		name "payone frontend"
+		type "Spree::PaymentMethod::PayoneFrontend"
+		active true
+		environment "test"
+  end
+
 end

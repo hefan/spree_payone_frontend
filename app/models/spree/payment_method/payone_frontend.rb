@@ -1,6 +1,6 @@
 module Spree
 	class PaymentMethod::PayoneFrontend < PaymentMethod::Check
-  		preference :mode, :string  #live or test
+  		preference :mode, :string, :default => "test"  # live or test
   		preference :secret_key, :string # key from payone backend
   		preference :portal_id, :string # portal id from payone backend
   		preference :sub_account_id, :string # portal id from payone backend
@@ -24,12 +24,11 @@ module Spree
 		# checks if the return param from payone is the same we generated
 		# return_param should be hex md5 from order number and payone key
 		def check_payone_exit_param order, return_param
-		    should_be = Digest::MD5.hexdigest(order.number+preferred_secret_key)
-		    should_be.eql? return_param
+			build_param(order.number).eql? return_param
 		end
 		#--------------------------------------------------------------------------------------------------------------
 		# build the payone url
-	    def build_url(order)
+	  def build_url(order)
 			payone_orders = []
 			payone_orders << {id: order.number, pr: (order.total * 100).to_i, no: 1, de: order.number }
 			amount = payone_orders[0][:pr]
@@ -78,9 +77,9 @@ module Spree
 		#--------------------------------------------------------------------------------------------------------------
 	    def build_hash amount, payone_orders, param, reference
 	    	str = 	preferred_sub_account_id+
-	    		  	amount.to_s+
-	    		  	preferred_clearing_type+
-	    		  	preferred_currency+
+	    		  amount.to_s+
+	    		  preferred_clearing_type+
+	    		  preferred_currency+
      				payone_orders[0][:de]+
      				preferred_display_address+
      				preferred_display_name+
@@ -96,7 +95,7 @@ module Spree
      				preferred_target_window+
      				preferred_secret_key
 			
-			Digest::MD5.hexdigest(str)
+				Digest::MD5.hexdigest(str)
 	    end
 		#--------------------------------------------------------------------------------------------------------------
 	    def build_param order_identifier
