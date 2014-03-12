@@ -14,36 +14,27 @@ describe Spree::PaymentMethod::PayoneFrontend do
 		@payone_frontend.set_preference(:sub_account_id, @sub_account_id)
 
 		@payment = create(:payment, order: @order, payment_method: @payone_frontend)
+    @payone_exit_param = @payone_frontend.build_payone_exit_param @order
 	end	
-
 #-------------------------------------------------------------------------------------------------
 	describe "exit param is encrypted correctly" do
-
-		before(:all) do
-      @payone_exit_param = @payone_frontend.build_payone_exit_param @order
-		end
 		
-		it "exit param is md5 of secret and order number" do
+		it "exit param is md5 of secret key and order number" do
 			@payone_exit_param.should eql(Digest::MD5.hexdigest("#{@order.number}#{@thekey}"))
 		end
 
-		it "check payone exit param function works with correct order and exit param" do
-			@payone_frontend.check_payone_exit_param(@order, @payone_exit_param).should be_true
-		end
-
-		it "check payone exit param function does not work with arbitrary exit param" do
-			@payone_frontend.check_payone_exit_param(@order, "jgfhdjshgjfdshjghjgsfdhjgs").should be_false
-		end
-
-		it "check payone exit param function does not work with other order" do
+		it "exit param of one order is unequal to exit param of other order" do
 			order2 = create(:order_with_line_items)
-  		payment2 = create(:payment, order: order2, payment_method: @payone_frontend)
-			@payone_frontend.check_payone_exit_param(order2, @payone_exit_param).should be_false
+			@payone_exit_param.should_not eql(Digest::MD5.hexdigest("#{order2.number}#{@thekey}"))
+		end
+
+		it "exit param of order with manipulated secret key is not equal to regular exit param" do
+			@payone_exit_param.should_not eql(Digest::MD5.hexdigest("#{@order.number}#{@thekey}2"))
 		end
 		
   end
 #-------------------------------------------------------------------------------------------------
-	describe "payone frontends built url" do
+	describe "payone frontend built url" do
 
 		it "is set" do
 			@payone_frontend.build_url(@order).should_not be_nil
@@ -59,6 +50,14 @@ describe Spree::PaymentMethod::PayoneFrontend do
 
 		it "contains the sub account id" do
 			@payone_frontend.build_url(@order).should include(@sub_account_id)
+    end
+
+		it "contains the exit param" do
+			@payone_frontend.build_url(@order).should include(@payone_exit_param)
+    end
+
+		it "does not contain the secret key" do
+			@payone_frontend.build_url(@order).should_not include(@thekey)
     end
 
   end
