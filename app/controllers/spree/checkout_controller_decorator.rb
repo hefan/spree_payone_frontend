@@ -1,7 +1,7 @@
 Spree::CheckoutController.class_eval do
-	before_filter :redirect_to_payone_form_if_needed, :only => [:update]
+	before_filter :redirect_to_payone, :only => [:update]
 
-	def redirect_to_payone_form_if_needed
+	def redirect_to_payone
   	return unless (params[:state] == "payment")
    	return unless params[:order][:payments_attributes]
 

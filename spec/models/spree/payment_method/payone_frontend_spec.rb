@@ -19,17 +19,17 @@ describe Spree::PaymentMethod::PayoneFrontend do
 #-------------------------------------------------------------------------------------------------
 	describe "exit param is encrypted correctly" do
 		
-		it "exit param is md5 of secret key and order number" do
-			@payone_exit_param.should eql(Digest::MD5.hexdigest("#{@order.number}#{@thekey}"))
+		it "exit param is SHA2 of secret key and order number" do
+			@payone_exit_param.should eql(Digest::SHA2.hexdigest("#{@order.number}#{@thekey}"))
 		end
 
 		it "exit param of one order is unequal to exit param of other order" do
 			order2 = create(:order_with_line_items)
-			@payone_exit_param.should_not eql(Digest::MD5.hexdigest("#{order2.number}#{@thekey}"))
+			@payone_exit_param.should_not eql(Digest::SHA2.hexdigest("#{order2.number}#{@thekey}"))
 		end
 
 		it "exit param of order with manipulated secret key is not equal to regular exit param" do
-			@payone_exit_param.should_not eql(Digest::MD5.hexdigest("#{@order.number}#{@thekey}2"))
+			@payone_exit_param.should_not eql(Digest::SHA2.hexdigest("#{@order.number}#{@thekey}2"))
 		end
 		
   end

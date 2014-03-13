@@ -41,8 +41,9 @@ class Spree::PayoneFrontendController < ApplicationController
       logger.info("#{key}: #{value}")
     end
 
-		order = Spree::Order.find_by_number(params[:reference])
+		order = Spree::Order.find_by_number(params[:reference])	
 		if order.present?
+		  # p.send("capture!") #TODO get appropiate payment and capture it
 			order.special_instructions = "" if order.special_instructions.blank?
 			order.special_instructions = order.special_instructions + "PAYONE TRANSACTION STATUS: modus: #{params[:mode]}, action: #{params[:txaction]}\n"
 			order.save!

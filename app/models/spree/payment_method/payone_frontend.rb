@@ -93,7 +93,7 @@ module Spree
 	    end
 		#--------------------------------------------------------------------------------------------------------------
 	    def build_param order_identifier
-	    	Digest::MD5.hexdigest(order_identifier+preferred_secret_key)
+	    	Digest::SHA2.hexdigest(order_identifier+preferred_secret_key)
 	    end	
 
 	end
