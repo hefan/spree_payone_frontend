@@ -62,6 +62,13 @@ describe Spree::PaymentMethod::PayoneFrontend do
 
   end
 #-------------------------------------------------------------------------------------------------
+	describe "status param key correct" do
+		it "is md5 hexdigest of secret key" do
+			md5_secret = Digest::MD5.hexdigest(@payone_frontend.preferred_secret_key)
+			@payone_frontend.check_payone_status_param(md5_secret).should be_true
+    end
+  end
+#-------------------------------------------------------------------------------------------------
 	after(:all) do
 		@payment.destroy
 		@order.destroy

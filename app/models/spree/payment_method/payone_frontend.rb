@@ -21,6 +21,12 @@ module Spree
 			build_param(order.number)
 		end	
 		#--------------------------------------------------------------------------------------------------------------
+		# check the payone status param "key" against the secret key
+    # the stauts param "key" has to be the md5 od the secret key
+		def check_payone_status_param param_key
+			param_key.eql? Digest::MD5.hexdigest(preferred_secret_key)
+		end	
+		#--------------------------------------------------------------------------------------------------------------
 		# build the payone url
 	  def build_url(order)
 			payone_orders = []
