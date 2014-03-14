@@ -53,4 +53,3 @@ Simply add this require statement to your spec_helper:
 require 'spree_payone_frontend/factories'
 ```
 
-Copyright (c) 2014 Stefan Hartmann, wemove, released under the New BSD License
