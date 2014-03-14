@@ -37,7 +37,7 @@ class Spree::PayoneFrontendController < ApplicationController
   # log transaction status from payone
   def status
 		if ::Spree::PayoneFrontend::StatusCheck.new(request).valid_request?
-			@order = Spree::Order.find_by_payone_hash(params[:reference])
+			@order = Spree::Order.find_by_number(params[:reference])
 			if @order.present?
 				last_payment = @order.last_payment
 				last_payment_method = @order.last_payment_method

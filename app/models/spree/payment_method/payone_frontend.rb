@@ -32,7 +32,7 @@ module Spree
 			payone_orders = []
 			payone_orders << {id: order.number, pr: (order.total * 100).to_i, no: 1, de: order.number }
 			amount = payone_orders[0][:pr]
-			reference = build_param(order.number)
+			reference = order.number
 
 			firstname=order.bill_address.firstname || ""
 			lastname=order.bill_address.lastname || ""
@@ -42,7 +42,7 @@ module Spree
 			country=order.bill_address.country.iso || ""
 			email=order.email || ""
 
-			param = reference
+			param = build_param order.number
 			hash = build_hash amount, payone_orders, param, reference
 
 			return  preferred_url_prefix+preferred_request+
