@@ -23,9 +23,16 @@ bundle exec rails g spree_payone_frontend:install
 Setup
 -----
 
-Navigate to Spree Backend/Configuraion/Payment Methods and add a new payment method with Provider "Spree::PaymentMethod::PayoneFrontend".
+You have to enter the following data in your payone merchant backend portal configuration:
 
-Enter the Portal id, the sub account id and the secret key from your payone account. Supported modes are "test" and "live".
+- Tick the "FinanceGate Frontend" checkbox.
+- Enter Success-URL: http://youshopdomain/payone_frontend/success?oid=__param__
+- Enter Cancel-URL: http://youshopdomain/payone_frontend/cancel
+- Enter Transaction-Status-URL: http://youshopdomain/payone_frontend/status
+
+Navigate to Spree Backend/Configuration/Payment Methods and add a new payment method with Provider "Spree::PaymentMethod::PayoneFrontend".
+
+Enter the Portal id, the sub account id and the secret key from your payone account. Supported modes are "test" and "live". The other options should be fine by default.
 
 
 
@@ -46,4 +53,3 @@ Simply add this require statement to your spec_helper:
 require 'spree_payone_frontend/factories'
 ```
 
-Copyright (c) 2014 [name of extension creator], released under the New BSD License
