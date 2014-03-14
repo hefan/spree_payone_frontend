@@ -1,7 +1,7 @@
 SpreePayoneFrontend
 ===================
 
-Extends Spree for Supporting Payone Credit Card Payments via th payone FinanceGate Channel Frontend. An appropiate Payone Merchant Account is required to use it. This Extension does only implement the success and cancel urls and the capture transaction status (no void or other transaction status requests are handled).
+Extends spree for supporting Payone credit card payments via the payone FinanceGate channel frontend. An appropiate Payone Merchant Account is required to use it. This Extension does only implement the success and cancel urls and the capture transaction status (no void or other transaction status requests are handled).
 
 
 Installation
