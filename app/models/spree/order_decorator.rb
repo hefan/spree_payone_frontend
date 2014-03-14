@@ -1,10 +1,13 @@
 Spree::Order.class_eval do
 
 	def last_payment_method
+		return nil if last_payment.blank?
+		return last_payment.payment_method
+	end	
+
+	def last_payment
 		return nil if payments.blank?
-		return nil if payments.last.blank?
-		return nil if payments.last.payment_method.blank?
-		return payments.last.payment_method
+		return payments.last
 	end	
 
 end

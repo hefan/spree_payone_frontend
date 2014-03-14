@@ -155,19 +155,19 @@ describe Spree::PayoneFrontendController do
 
   		it "does capture the orders payment when txaction is capture" do
 				spree_post :status, reference: @order.payone_hash, txaction: "capture", key: Digest::MD5.hexdigest(@thekey)
-				assigns[:order].last_payment_method.payment.state.should.eql? "completed"
+				assigns[:order].last_payment.state.should.eql? "completed"
 		  end
 
   		it "does capture the orders payment when txaction is paid" do
 				spree_post :status, reference: @order.payone_hash, txaction: "paid", key: Digest::MD5.hexdigest(@thekey)
-				assigns[:order].last_payment_method.payment.state.should.eql? "completed"
+				assigns[:order].last_payment.state.should.eql? "completed"
 		  end
 
   		it "does not capture the orders payment twice when two txaction paid or capture occurs" do
 				spree_post :status, reference: @order.payone_hash, txaction: "capture", key: Digest::MD5.hexdigest(@thekey)
-				assigns[:order].last_payment_method.payment.state.should.eql? "completed"
+				assigns[:order].last_payment.state.should.eql? "completed"
 				spree_post :status, reference: @order.payone_hash, txaction: "paid", key: Digest::MD5.hexdigest(@thekey)
-				assigns[:order].last_payment_method.payment.state.should.eql? "completed"
+				assigns[:order].last_payment.state.should.eql? "completed"
 		  end
 
   		it "does return TSOK if the orders payment is captured" do

@@ -9,6 +9,10 @@ describe Spree::Order do
 
 #-------------------------------------------------------------------------------------------------
 	context "it has no payment" do
+		it "last payment is null" do
+      @order.last_payment.should be_nil
+    end
+
 		it "last payment method is null" do
       @order.last_payment_method.should be_nil
     end
@@ -18,6 +22,10 @@ describe Spree::Order do
 		before(:each) do
 			@payment = FactoryGirl.create(:payment, order: @order, payment_method: @payment_method)
 		end
+
+		it "last payment is given" do
+	    @order.last_payment.should_not be_nil
+	  end
 	
 		it "last payment method is given" do
 	    @order.last_payment_method.should_not be_nil
