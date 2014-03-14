@@ -1,19 +1,19 @@
 module Spree
 	class PaymentMethod::PayoneFrontend < PaymentMethod::Check
-  		preference :mode, :string, :default => "test"  # live or test
-  		preference :secret_key, :string # key from payone backend
-  		preference :portal_id, :string # portal id from payone backend
-  		preference :sub_account_id, :string # portal id from payone backend
+  	preference :mode, :string, :default => "test"  # live or test
+  	preference :secret_key, :string # key from payone backend
+  	preference :portal_id, :string # portal id from payone backend
+  	preference :sub_account_id, :string # portal id from payone backend
 
-  		preference :url_prefix, :string, :default => "https://secure.pay1.de/frontend/?request="
+  	preference :url_prefix, :string, :default => "https://secure.pay1.de/frontend/?request="
 
-  		preference :clearing_type, :string, :default => "cc"
-  		preference :currency, :string, :default => "EUR"
-  		preference :display_address, :string, :default => "no"
-  		preference :display_name, :string, :default => "no"
-  		preference :encoding, :string, :default => "UTF-8"
-  		preference :request, :string, :default => "authorization"
-  		preference :target_window, :string, :default => "top"
+  	preference :clearing_type, :string, :default => "cc"
+  	preference :currency, :string, :default => "EUR"
+  	preference :display_address, :string, :default => "no"
+  	preference :display_name, :string, :default => "no"
+  	preference :encoding, :string, :default => "UTF-8"
+  	preference :request, :string, :default => "authorization"
+  	preference :target_window, :string, :default => "top"
 
 		#--------------------------------------------------------------------------------------------------------------
 		# build the exit param for payone to be returned to identify the order
@@ -94,7 +94,7 @@ module Spree
      				preferred_request+
      				preferred_target_window+
      				preferred_secret_key
-			
+
 				Digest::MD5.hexdigest(str)
 	    end
 		#--------------------------------------------------------------------------------------------------------------
@@ -104,4 +104,4 @@ module Spree
 
 	end
 
-end	
+end
