@@ -1,7 +1,8 @@
 SpreePayoneFrontend
 ===================
 
-Introduction goes here.
+Extends Spree for Supporting Payone Credit Card Payments via th payone FinanceGate Channel Frontend. An appropiate Payone Merchant Account is required to use it.
+
 
 Installation
 ------------
@@ -9,7 +10,7 @@ Installation
 Add spree_payone_frontend to your Gemfile:
 
 ```ruby
-gem 'spree_payone_frontend'
+gem 'spree_payone_frontend', :git => 'git://github.com/hefan/spree_payone_frontend.git' 
 ```
 
 Bundle your dependencies and run the installation generator:
@@ -26,7 +27,6 @@ Be sure to bundle your dependencies and then create a dummy test app for the spe
 
 ```shell
 bundle
-bundle exec rake test_app
 bundle exec rspec spec
 ```
 
