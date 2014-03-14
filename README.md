@@ -23,9 +23,9 @@ bundle exec rails g spree_payone_frontend:install
 Setup
 -----
 
-Navigate to Spree Backend/Configuraion/Payment Methods and add a new payment method with Provider "Spree::PaymentMethod::PayoneFrontend".
+Navigate to Spree Backend/Configuration/Payment Methods and add a new payment method with Provider "Spree::PaymentMethod::PayoneFrontend".
 
-Enter the Portal id, the sub account id and the secret key from your payone account. Supported modes are "test" and "live".
+Enter the Portal id, the sub account id and the secret key from your payone account. Supported modes are "test" and "live". The other options should be fine by default.
 
 
 
