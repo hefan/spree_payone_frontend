@@ -3,7 +3,7 @@ module Spree
   	preference :mode, :string, :default => "test"  # live or test
   	preference :secret_key, :string # key from payone backend
   	preference :portal_id, :string # portal id from payone backend
-  	preference :sub_account_id, :string # portal id from payone backend
+  	preference :sub_account_id, :string # sub account id from payone backend
 
   	preference :url_prefix, :string, :default => "https://secure.pay1.de/frontend/?request="
 
