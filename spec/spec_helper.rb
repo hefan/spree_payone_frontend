@@ -33,7 +33,7 @@ require 'spree/testing_support/url_helpers'
 require 'spree_payone_frontend/factories'
 
 RSpec.configure do |config|
-	config.include Spree::TestingSupport::ControllerRequests, :type => :controller
+  config.include Spree::TestingSupport::ControllerRequests, :type => :controller
 
   config.include FactoryGirl::Syntax::Methods
 

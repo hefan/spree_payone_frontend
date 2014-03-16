@@ -6,13 +6,13 @@ module Spree::PayoneFrontend
     
     def valid_request?
       if @request.post? and valid_ip?
-			  true
-			else
-				false
-			end
+        true
+      else
+        false
+      end
     end
     
-		private 
+    private
 
     def valid_ip?
       ip = @request.ip.to_s
