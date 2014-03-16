@@ -108,7 +108,7 @@ describe Spree::PayoneFrontendController do
 
       it "does not return TSOK without reference param" do
         spree_post :status
-        response.body.should_not.eql?("TSOK")
+        response.body.should_not eql("TSOK")
       end
 
     end
@@ -120,7 +120,7 @@ describe Spree::PayoneFrontendController do
 
       it "does nothing with wrong referer even if all other is correct" do
         spree_post :status, reference: @order.number, txaction: "capture", key: Digest::MD5.hexdigest(@thekey)
-        response.body.should_not.eql?("TSOK")
+        response.body.should_not eql("TSOK")
         assigns[:order].should be_nil
       end
 
@@ -130,7 +130,7 @@ describe Spree::PayoneFrontendController do
 
       it "does nothing with wrong request type" do
         spree_get :status
-        response.body.should_not.eql?("TSOK")
+        response.body.should_not eql("TSOK")
         assigns[:order].should be_nil
       end
 
@@ -140,8 +140,8 @@ describe Spree::PayoneFrontendController do
 
       it "does nothing with wrong payone transaction status key" do
         spree_post :status, reference: @order.number, txaction: "capture", key: "blabla"
-        response.body.should_not.eql?("TSOK")
-        assigns[:order].payments[0].state.should_not.eql? "completed"
+        response.body.should_not eql("TSOK")
+        assigns[:order].payments[0].state.should_not eql "completed"
       end
 
       it "does find order with correct reference param" do
@@ -151,34 +151,34 @@ describe Spree::PayoneFrontendController do
 
       it "does nothing with the orders payment with indifferent txaction param" do
         spree_post :status, reference: @order.number, txaction: "void", key: Digest::MD5.hexdigest(@thekey)
-        assigns[:order].payments[0].state.should_not.eql? "completed"
+        assigns[:order].payments[0].state.should_not eql "completed"
       end
 
       it "does return TSOK with indifferent txaction param" do
         spree_post :status, reference: @order.number, txaction: "void", key: Digest::MD5.hexdigest(@thekey)
-        response.body.should.eql?("TSOK")
+        response.body.should eql("TSOK")
       end
 
       it "does capture the orders payment when txaction is capture" do
         spree_post :status, reference: @order.number, txaction: "capture", key: Digest::MD5.hexdigest(@thekey)
-        assigns[:order].last_payment.state.should.eql? "completed"
+        assigns[:order].last_payment.state.should eql "completed"
       end
 
       it "does capture the orders payment when txaction is paid" do
         spree_post :status, reference: @order.number, txaction: "paid", key: Digest::MD5.hexdigest(@thekey)
-        assigns[:order].last_payment.state.should.eql? "completed"
+        assigns[:order].last_payment.state.should eql "completed"
       end
 
       it "does not capture the orders payment twice when two txaction paid or capture occurs" do
         spree_post :status, reference: @order.number, txaction: "capture", key: Digest::MD5.hexdigest(@thekey)
-        assigns[:order].last_payment.state.should.eql? "completed"
+        assigns[:order].last_payment.state.should eql "completed"
         spree_post :status, reference: @order.number, txaction: "paid", key: Digest::MD5.hexdigest(@thekey)
-        assigns[:order].last_payment.state.should.eql? "completed"
+        assigns[:order].last_payment.state.should eql "completed"
       end
 
       it "does return TSOK if the orders payment is captured" do
         spree_post :status, reference: @order.number, txaction: "capture", key: Digest::MD5.hexdigest(@thekey)
-        response.body.should.eql?("TSOK")
+        response.body.should eql("TSOK")
       end
 
     end
