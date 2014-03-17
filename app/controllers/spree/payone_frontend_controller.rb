@@ -37,13 +37,13 @@ class Spree::PayoneFrontendController < ApplicationController
   # log transaction status from payone
   def status
     if ::Spree::PayoneFrontend::StatusCheck.new(request).valid_request?
-      @order = Spree::Order.find_by_number(params[:reference])
+      @order = Spree::Order.find_by(number: params[:reference], payone_hash: params[:param])
       if @order.present?
         last_payment = @order.last_payment
         last_payment_method = @order.last_payment_method
         if last_payment_method.present? and last_payment_method.check_payone_status_param(params[:key])
           unless last_payment.eql?("completed") # do only capture once
-            last_payment.send("capture!") if params[:key].eql?("capture") or params[:key].eql?("paid")
+            last_payment.send("capture!") if params[:txaction].eql?("capture") or params[:txaction].eql?("paid")
           end
           render :text => 'TSOK'
         else
