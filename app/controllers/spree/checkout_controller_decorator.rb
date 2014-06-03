@@ -8,7 +8,7 @@ Spree::CheckoutController.class_eval do
     payment_method = Spree::PaymentMethod.find(params[:order][:payments_attributes].first[:payment_method_id])
 
     if payment_method.kind_of?(Spree::PaymentMethod::PayoneFrontend)
-      @order.update_attributes(object_params)
+      order.update_from_params(params, permitted_checkout_attributes)
       @order.payone_hash = payment_method.build_payone_exit_param(@order)
       @order.save!
       redirect_to payment_method.build_url(@order)
