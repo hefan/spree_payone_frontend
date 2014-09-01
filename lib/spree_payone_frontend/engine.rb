@@ -21,7 +21,7 @@ module SpreePayoneFrontend
 
     initializer "spree_payone_fronted.register.payment_methods", :after => 'spree.register.payment_methods' do |app|
       app.config.spree.payment_methods += [Spree::PaymentMethod::PayoneFrontend]
-		end
+    end
 
   end
 end

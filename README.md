@@ -1,7 +1,7 @@
 SpreePayoneFrontend
 ===================
 
-Extends Spree for Supporting Payone Credit Card Payments via th payone FinanceGate Channel Frontend. An appropiate Payone Merchant Account is required to use it. This Extension does only implement the success and cancel urls and the capture transaction status (no void or other transaction status requests are handled).
+Extends spree for supporting Payone credit card payments via the payone FinanceGate channel frontend. An appropiate Payone Merchant Account is required to use it. This Extension does only implement the success and cancel urls and the capture transaction status (no void or other transaction status requests are handled).
 
 
 Installation
@@ -20,20 +20,26 @@ bundle
 bundle exec rails g spree_payone_frontend:install
 ```
 
+
 Setup
 -----
 
 You have to enter the following data in your payone merchant backend portal configuration:
 
 - Tick the "FinanceGate Frontend" checkbox.
-- Enter Success-URL: http://youshopdomain/payone_frontend/success?oid=__param__
+- Enter Success-URL: http://youshopdomain/payone_frontend/success?oid= __ param __
 - Enter Cancel-URL: http://youshopdomain/payone_frontend/cancel
-- Enter Transaction-Status-URL: http://youshopdomain/payone_frontend/status
+- Enter Transaction-Status-URL: http://yourshopdomain/payone_frontend/status
 
 Navigate to Spree Backend/Configuration/Payment Methods and add a new payment method with Provider "Spree::PaymentMethod::PayoneFrontend".
 
 Enter the Portal id, the sub account id and the secret key from your payone account. Supported modes are "test" and "live". The other options should be fine by default.
 
+
+Todo
+-----
+
+- Add Transaction Logs
 
 
 Testing
