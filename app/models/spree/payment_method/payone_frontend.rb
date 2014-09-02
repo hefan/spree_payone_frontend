@@ -1,7 +1,7 @@
 module Spree
   class PaymentMethod::PayoneFrontend < PaymentMethod::Check
     preference :mode, :string, :default => "test"  # live or test
-    preference :secret_key, :string # key from payone backend
+    preference :secret_key, :string, :default => "" # key from payone backend
     preference :portal_id, :string # portal id from payone backend
     preference :sub_account_id, :string # portal id from payone backend
 
