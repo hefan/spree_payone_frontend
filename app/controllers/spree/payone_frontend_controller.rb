@@ -4,19 +4,19 @@ class Spree::PayoneFrontendController < ApplicationController
     order = Spree::Order.find_by_payone_hash(params[:oid])
 
     if params.blank? or params[:oid].blank? or order.blank?
-      flash[:error] = "payment canceled, none or wrong oid delivered"
+      flash[:error] = I18n.t("payone.payment_canceled.no_object_id")
       redirect_to '/checkout/payment', :status => 302
       return
     end
 
     if order.last_payment_method.blank?
-      flash[:error] = "payment canceled, payment method is blank"
+      flash[:error] = I18n.t("payone.payment_canceled.no_payment_method")
       redirect_to '/checkout/payment', :status => 302
       return
     end
 
     unless order.last_payment_method.kind_of? Spree::PaymentMethod::PayoneFrontend
-      flash[:error] = "payment canceled, payment method not kind of payone frontend"
+      flash[:error] = I18n.t("payone.payment_canceled.wrong_payment_method")
       redirect_to '/checkout/payment', :status => 302
       return
     end
@@ -30,7 +30,7 @@ class Spree::PayoneFrontendController < ApplicationController
   end
 
   def cancel
-    flash[:error] = "payment canceled"
+    flash[:error] = I18n.t("payone.payment_canceled.canceled_by_user")
     redirect_to '/checkout/payment', :status => 302
   end
 

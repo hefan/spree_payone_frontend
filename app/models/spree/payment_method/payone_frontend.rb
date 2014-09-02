@@ -15,6 +15,11 @@ module Spree
     preference :request, :string, :default => "authorization"
     preference :target_window, :string, :default => "top"
 
+    attr_accessible :preferred_mode, :preferred_secret_key, :preferred_portal_id, :preferred_sub_account_id,
+     					      :preferred_url_prefix, :preferred_clearing_type, :preferred_currency,
+    					      :preferred_display_address, :preferred_display_name, :preferred_encoding,
+    					      :preferred_request, :preferred_target_window
+
     #--------------------------------------------------------------------------------------------------------------
     # build the exit param for payone to be returned to identify the order
     def build_payone_exit_param order

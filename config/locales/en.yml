@@ -2,4 +2,9 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  hello: "Hello world"
+  payone:
+    payment_canceled:
+      no_object_id: "payment canceled, none or wrong oid delivered"
+      no_payment_method: "payment canceled, payment method is blank"
+      wrong_payment_method: "payment canceled, payment method not kind of payone frontend"
+      canceled_by_user: "payment canceled"
