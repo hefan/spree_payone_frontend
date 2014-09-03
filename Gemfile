@@ -5,6 +5,7 @@ gem 'spree_auth_devise', github: 'spree/spree_auth_devise', :branch => '2-3-stab
 
 group :development, :test do
   gem "therubyracer"
+  gem 'rspec-activemodel-mocks'
   gem "debugger"
 end
 
