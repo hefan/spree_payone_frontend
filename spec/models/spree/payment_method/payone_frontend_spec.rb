@@ -31,7 +31,7 @@ describe Spree::PaymentMethod::PayoneFrontend do
     it "exit param of order with manipulated secret key is not equal to regular exit param" do
       @payone_exit_param.should_not eql(Digest::SHA2.hexdigest("#{@order.number}#{@thekey}2"))
     end
-    
+
   end
 #-------------------------------------------------------------------------------------------------
   describe "payone frontend built url" do
@@ -65,7 +65,7 @@ describe Spree::PaymentMethod::PayoneFrontend do
   describe "status param key correct" do
     it "is md5 hexdigest of secret key" do
       md5_secret = Digest::MD5.hexdigest(@payone_frontend.preferred_secret_key)
-      @payone_frontend.check_payone_status_param(md5_secret).should be_true
+      @payone_frontend.check_payone_status_param(md5_secret).should be true
     end
   end
 #-------------------------------------------------------------------------------------------------
