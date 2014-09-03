@@ -1,9 +1,9 @@
 module Spree
   class PaymentMethod::PayoneFrontend < PaymentMethod::Check
     preference :mode, :string, :default => "test"  # live or test
-    preference :secret_key, :string, :default => "" # key from payone backend
-    preference :portal_id, :string # portal id from payone backend
-    preference :sub_account_id, :string # portal id from payone backend
+    preference :secret_key, :string, :default => "23thekey" # key from payone backend
+    preference :portal_id, :string, :default => "1234567" # portal id from payone backend
+    preference :sub_account_id, :string, :default => "567890" # portal id from payone backend
 
     preference :url_prefix, :string, :default => "https://secure.pay1.de/frontend/?request="
 
