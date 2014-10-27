@@ -3,7 +3,7 @@ module Spree::PayoneFrontend
     def initialize request
       @request = request
     end
-    
+
     def valid_request?
       if @request.post? and valid_ip?
         true
@@ -11,7 +11,7 @@ module Spree::PayoneFrontend
         false
       end
     end
-    
+
     private
 
     def valid_ip?
@@ -21,7 +21,12 @@ module Spree::PayoneFrontend
          ip =~ /^217.70.200.[0-9]$/ or
          ip =~ /^217.70.200.[1-9][0-9]$/ or
          ip =~ /^217.70.200.[1-2][0-4][0-9]$/ or
-         ip =~ /^217.70.200.[1-2]5[0-5]$/
+         ip =~ /^217.70.200.[1-2]5[0-5]$/ or
+         ip =~ /^185.60.20.[0-9]$/ or
+         ip =~ /^185.60.20.[1-9][0-9]$/ or
+         ip =~ /^185.60.20.[1-2][0-4][0-9]$/ or
+         ip =~ /^185.60.20.[1-2]5[0-5]$/
+
         true
       else
         false
