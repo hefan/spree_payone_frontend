@@ -45,32 +45,38 @@ module Spree
       param = build_param order.number
       hash = build_hash amount, payone_orders, param, reference
 
-      return  preferred_url_prefix+preferred_request+
-          "&mode="+preferred_mode+
-          "&language="+I18n.locale.to_s+
-          "&aid="+preferred_sub_account_id+
-          "&portalid="+preferred_portal_id+
-          "&clearingtype="+preferred_clearing_type+
-          "&currency="+preferred_currency+
-          "&amount="+amount.to_s+
-          "&reference="+reference+
-          "&display_address="+preferred_display_address+
-          "&display_name="+preferred_display_name+
-          "&encoding="+preferred_encoding+
-          "&targetwindow="+preferred_target_window+
-          "&firstname="+URI::encode(firstname)+
-          "&lastname="+URI::encode(lastname)+
-          "&street="+URI::encode(street)+
-          "&zip="+URI::encode(zip)+
-          "&city="+URI::encode(city)+
-          "&country="+URI::encode(country)+
-          "&email="+URI::encode(email)+
-          "&id[1]="+payone_orders[0][:id]+
-          "&pr[1]="+payone_orders[0][:pr].to_s+
-          "&no[1]="+payone_orders[0][:no].to_s+
-          "&de[1]="+payone_orders[0][:de]+
-          "&param="+param+
-          "&hash="+hash
+      uri = URI(preferred_url_prefix+preferred_request)
+      sub_params = %w{ id pr no de }.map do |k|
+        k => {
+          1 => payone_orders[0][k]
+        }
+      end
+
+      params = {
+        mode: preferred_mode,
+        language: I18n.locale,
+        aid: preferred_sub_account_id,
+        portalid: preferred_portal_id,
+        clearingtype: preferred_clearing_type,
+        currency: preferred_currency,
+        amount: amount,
+        reference: reference,
+        display_address: preferred_display_address,
+        display_name: preferred_display_name,
+        encoding: preferred_encoding,
+        targetwindow: preferred_target_window,
+        firstname: firstname,
+        lastname: lastname,
+        street: street,
+        zip: zip,
+        city: city,
+        country: country,
+        email: email,
+        param: param,
+        hash: hash
+      }
+      uri.query = params.merge(sub_params)
+      uri.to_s
     end
     #--------------------------------------------------------------------------------------------------------------
     private
