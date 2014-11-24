@@ -1,0 +1,10 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+de:
+  payone:
+    payment_canceled:
+      no_object_id: "Bezahlung abgebrochen, keine oder falsche Objekt id"
+      no_payment_method: "Bezahlung abgebrochen, Zahlmethode fehlt"
+      wrong_payment_method: "Bezahlung abgebrochen, Zahlungsmethode wird von PayOne Frontend nicht angeboten"
+      canceled_by_user: "Bezahlung abgebrochen"
