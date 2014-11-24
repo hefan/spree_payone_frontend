@@ -27,9 +27,9 @@ Setup
 You have to enter the following data in your payone merchant backend portal configuration:
 
 - Tick the "FinanceGate Frontend" checkbox.
-- Enter Success-URL: http://youshopdomain/payone_frontend/success?oid=__param__
-- Enter Cancel-URL: http://youshopdomain/payone_frontend/cancel
-- Enter Transaction-Status-URL: http://yourshopdomain/payone_frontend/status
+- Enter Success-URL: ```http://youshopdomain/payone_frontend/success?oid=__param__```
+- Enter Cancel-URL: ```http://youshopdomain/payone_frontend/cancel```
+- Enter Transaction-Status-URL: ```http://yourshopdomain/payone_frontend/status```
 
 Navigate to Spree Backend/Configuration/Payment Methods and add a new payment method with Provider "Spree::PaymentMethod::PayoneFrontend".
 
