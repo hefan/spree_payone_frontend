@@ -1,0 +1,7 @@
+de:
+  payone:
+    payment_canceled:
+      no_object_id: "Bezahlung abgebrochen, keine oder falsche Objekt id"
+      no_payment_method: "Bezahlung abgebrochen, Zahlmethode fehlt"
+      wrong_payment_method: "Bezahlung abgebrochen, Zahlungsmethode wird von PayOne Frontend nicht angeboten"
+      canceled_by_user: "Bezahlung abgebrochen"
