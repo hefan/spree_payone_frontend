@@ -20,7 +20,11 @@ module Spree::PayoneFrontend
         '217.70.200.0/24',
         '185.60.20.0/24'
       ].any? do |address_block|
-        IPAddr.new(address_block) === request.remote_ip
+        begin
+          IPAddr.new(address_block) === @request.remote_ip
+        rescue IPAddr::InvalidAddressError => iae
+          return false
+        end
       end
     end
 
