@@ -15,21 +15,12 @@ module Spree::PayoneFrontend
     private
 
     def valid_ip?
-      ip = @request.ip.to_s
-      if ip =~ /^213.178.72.196$/ or
-         ip =~ /^213.178.72.197$/ or
-         ip =~ /^217.70.200.[0-9]$/ or
-         ip =~ /^217.70.200.[1-9][0-9]$/ or
-         ip =~ /^217.70.200.[1-2][0-4][0-9]$/ or
-         ip =~ /^217.70.200.[1-2]5[0-5]$/ or
-         ip =~ /^185.60.20.[0-9]$/ or
-         ip =~ /^185.60.20.[1-9][0-9]$/ or
-         ip =~ /^185.60.20.[1-2][0-4][0-9]$/ or
-         ip =~ /^185.60.20.[1-2]5[0-5]$/
-
-        true
-      else
-        false
+      [
+        '213.178.72.196/31',
+        '217.70.200.0/24',
+        '185.60.20.0/24'
+      ].any? do |address_block|
+        IPAddr.new(address_block) === request.remote_ip
       end
     end
 
