@@ -1,3 +1,4 @@
+require 'ipaddr'
 module Spree::PayoneFrontend
   class StatusCheck
     def initialize request
@@ -21,8 +22,8 @@ module Spree::PayoneFrontend
         '185.60.20.0/24'
       ].any? do |address_block|
         begin
-          ::IPAddr.new(address_block) === @request.remote_ip
-        rescue ::IPAddr::InvalidAddressError => iae
+          IPAddr.new(address_block) === @request.remote_ip
+        rescue IPAddr::InvalidAddressError => iae
           return false
         end
       end
