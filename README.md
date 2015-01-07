@@ -10,7 +10,7 @@ Installation
 Add spree_payone_frontend to your Gemfile:
 
 ```ruby
-gem 'spree_payone_frontend', :git => 'git://github.com/hefan/spree_payone_frontend.git' 
+gem 'spree_payone_frontend', :git => 'git://github.com/hefan/spree_payone_frontend.git'
 ```
 
 Bundle your dependencies and run the installation generator:
@@ -35,6 +35,7 @@ Navigate to Spree Backend/Configuration/Payment Methods and add a new payment me
 
 Enter the Portal id, the sub account id and the secret key from your payone account. Supported modes are "test" and "live". The other options should be fine by default.
 
+You may use a reference prefix and/or suffix if you like to add something before or after the order number used as reference for payone. Please be aware that the reference for payone can only be up to 20 chars long.
 
 Todo
 -----
@@ -58,4 +59,3 @@ Simply add this require statement to your spec_helper:
 ```ruby
 require 'spree_payone_frontend/factories'
 ```
-
