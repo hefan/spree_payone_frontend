@@ -7,6 +7,9 @@ module Spree
 
     preference :url_prefix, :string, :default => "https://secure.pay1.de/frontend/?request="
 
+    preference :reference_prefix, :string, :default => ""
+    preference :reference_suffix, :string, :default => ""
+
     preference :clearing_type, :string, :default => "cc"
     preference :currency, :string, :default => "EUR"
     preference :display_address, :string, :default => "no"
@@ -29,10 +32,10 @@ module Spree
     #--------------------------------------------------------------------------------------------------------------
     # build the payone url
     def build_url(order)
+      reference = order.payone_ref_number
       payone_orders = []
-      payone_orders << {id: order.number, pr: (order.total * 100).to_i, no: 1, de: order.number }
+      payone_orders << {id: order.payone_ref_number, pr: (order.total * 100).to_i, no: 1, de: order.payone_ref_number }
       amount = payone_orders[0][:pr]
-      reference = order.number
 
       firstname=order.bill_address.firstname || ""
       lastname=order.bill_address.lastname || ""
