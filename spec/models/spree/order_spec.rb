@@ -4,7 +4,7 @@ describe Spree::Order do
 
   before(:each) do
     @order = FactoryGirl.create(:order)
-    @payment_method = FactoryGirl.create(:check_payment_method)
+    @payment_method = FactoryGirl.create(:payone_frontend)
   end
 
 #-------------------------------------------------------------------------------------------------
@@ -16,6 +16,11 @@ describe Spree::Order do
     it "last payment method is null" do
       @order.last_payment_method.should be_nil
     end
+
+    it "payone ref number is only order number" do
+      @order.payone_ref_number.should eql(@order.number);
+    end
+
   end
 #-------------------------------------------------------------------------------------------------
   context "it has a valid payment" do
@@ -29,6 +34,12 @@ describe Spree::Order do
 
     it "last payment method is given" do
       @order.last_payment_method.should_not be_nil
+    end
+
+    it "payone ref number has prefix and suffix of payment" do
+      @order.last_payment_method.set_preference(:reference_prefix, "prefix")
+      @order.last_payment_method.set_preference(:reference_suffix, "suffix")
+      @order.payone_ref_number.should eql("prefix#{@order.number}suffix");
     end
 
     after(:each) do
