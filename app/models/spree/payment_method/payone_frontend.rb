@@ -34,7 +34,7 @@ module Spree
     def build_url(order)
       reference = order.payone_ref_number
       payone_orders = []
-      payone_orders << {id: order.payone_ref_number, pr: (order.total * 100).to_i, no: 1, de: order.payone_ref_number }
+      payone_orders << {id: reference, pr: (order.total * 100).to_i, no: 1, de: reference }
       amount = payone_orders[0][:pr]
 
       firstname=order.bill_address.firstname || ""
