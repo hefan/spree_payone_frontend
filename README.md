@@ -35,7 +35,7 @@ Navigate to Spree Backend/Configuration/Payment Methods and add a new payment me
 
 Enter the Portal id, the sub account id and the secret key from your payone account. Supported modes are "test" and "live". The other options should be fine by default.
 
-You may use a reference prefix and/or suffix if you like to add something before or after the order number used as reference for payone. Please be aware that the reference for payone can only be up to 20 chars long.
+You may use a reference prefix and/or suffix if you like to add something before or after the order number used as reference for payone. Please be aware that the reference for payone can only be up to 20 chars long and may only contain 0-9,a-z,A-Z,+,-,_,/.
 
 
 Todo
