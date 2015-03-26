@@ -13,6 +13,13 @@ Add spree_payone_frontend to your Gemfile:
 gem 'spree_payone_frontend', :git => 'git://github.com/hefan/spree_payone_frontend.git'
 ```
 
+For a specific version use the appropriate branch, for example
+
+```ruby
+gem 'spree_payone_frontend', :git => 'git://github.com/hefan/spree_payone_frontend.git', :branch => 'master'
+```
+
+
 Bundle your dependencies and run the installation generator:
 
 ```shell
