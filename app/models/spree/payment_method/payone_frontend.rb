@@ -21,7 +21,8 @@ module Spree
     attr_accessible :preferred_mode, :preferred_secret_key, :preferred_portal_id, :preferred_sub_account_id,
      					      :preferred_url_prefix, :preferred_clearing_type, :preferred_currency,
     					      :preferred_display_address, :preferred_display_name, :preferred_encoding,
-    					      :preferred_request, :preferred_target_window
+    					      :preferred_request, :preferred_target_window,
+                    :preferred_reference_prefix, :preferred_reference_suffix
 
     #--------------------------------------------------------------------------------------------------------------
     # build the exit param for payone to be returned to identify the order
