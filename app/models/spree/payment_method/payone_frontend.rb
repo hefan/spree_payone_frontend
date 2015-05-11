@@ -23,7 +23,6 @@ module Spree
     					      :preferred_display_address, :preferred_display_name, :preferred_encoding,
     					      :preferred_request, :preferred_target_window,
                     :preferred_reference_prefix, :preferred_reference_suffix
-
     #--------------------------------------------------------------------------------------------------------------
     # build the exit param for payone to be returned to identify the order
     def build_payone_exit_param order
