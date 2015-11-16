@@ -16,7 +16,7 @@ gem 'spree_payone_frontend', :git => 'git://github.com/hefan/spree_payone_fronte
 For a specific version use the appropriate branch, for example
 
 ```ruby
-gem 'spree_payone_frontend', :git => 'git://github.com/hefan/spree_payone_frontend.git', :branch => 'master'
+gem 'spree_payone_frontend', :git => 'git://github.com/hefan/spree_payone_frontend.git', :branch => '2-4-stable'
 ```
 
 
