@@ -5,6 +5,7 @@ module SpreePayoneFrontend
     engine_name 'spree_payone_frontend'
 
     config.autoload_paths += %W(#{config.root}/lib)
+    config.assets.precompile += %w( payone_logo.png )
 
     # use rspec for tests
     config.generators do |g|
