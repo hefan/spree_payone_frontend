@@ -110,9 +110,9 @@ describe Spree::PayoneFrontendController do
         assigns[:order].last_payment.state.should_not eql "completed"
       end
 
-      it "does not find order with wrong reference and correct param" do
-        spree_post :status, reference: @order.number+"1", param: @order.payone_hash
-        assigns[:order].should be_nil
+      it "does not find orders ref number with wrong reference and correct param" do
+        spree_post :status, reference: @order.number, param: @order.payone_hash
+        assigns[:order].payone_ref_number.should_not eql (@order.number+"1")
       end
 
       it "does not find order with correct reference and wrong param" do

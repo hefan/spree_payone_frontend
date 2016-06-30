@@ -4,7 +4,6 @@ FactoryGirl.define do
     name "payone frontend"
     type "Spree::PaymentMethod::PayoneFrontend"
     active true
-    environment "test"
   end
 
 end
