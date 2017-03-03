@@ -1,6 +1,6 @@
 class Spree::PayoneFrontendController < ApplicationController
 
-  skip_before_filter :verify_authenticity_token, :only => [:status]
+  skip_before_action :verify_authenticity_token, :only => [:status]
 
   def success
     order = Spree::Order.find_by_payone_hash(params[:oid])
@@ -47,15 +47,15 @@ class Spree::PayoneFrontendController < ApplicationController
           unless last_payment.eql?("completed") # do only capture once
             last_payment.send("capture!") if params[:txaction].eql?("capture") or params[:txaction].eql?("paid")  or params[:txaction].eql?("appointed")
           end
-          render :text => 'TSOK'
+          render plain: 'TSOK'
         else
-          render :text => "NOTOK"
+          render plain: "NOTOK"
         end
       else
-        render :text => "NOTOK"
+        render plain: "NOTOK"
       end
     else
-      render :text => "NOTOK"
+      render plain: "NOTOK"
     end
   end
 

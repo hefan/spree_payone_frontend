@@ -16,7 +16,7 @@ describe Spree::PayoneFrontendController do
 
     it "flash an error" do
       spree_get :cancel
-      flash[:error].should_not be_nil
+      expect(flash[:error]).not_to eq(nil)
     end
 
     it "redirects to the payment screen" do
@@ -30,13 +30,13 @@ describe Spree::PayoneFrontendController do
 
     it "fails with no payone_hash/oid given" do
       spree_get :success
-      flash[:error].should_not be_nil
+      expect(flash[:error]).not_to eq(nil)
       expect(response).to redirect_to "/checkout/payment"
     end
 
     it "fails with previously unsaved payone_hash/oid given" do
       spree_get :success, oid: @payone_exit_param
-      flash[:error].should_not be_nil
+      expect(flash[:error]).not_to eq(nil)
       expect(response).to redirect_to "/checkout/payment"
     end
 
@@ -46,7 +46,7 @@ describe Spree::PayoneFrontendController do
       @order.payone_hash = @payone_exit_param
       @order.save
       spree_get :success, oid: @payone_exit_param
-      flash[:error].should_not be_nil
+      expect(flash[:error]).not_to eq(nil)
       expect(response).to redirect_to "/checkout/payment"
     end
 
@@ -71,12 +71,12 @@ describe Spree::PayoneFrontendController do
 
       it "does not find order without reference param" do
         spree_post :status, reference: "123"
-        assigns[:order].should be_nil
+        expect(assigns[:order]).to eq(nil)
       end
 
       it "does not return TSOK without reference param" do
         spree_post :status
-        response.body.should_not eql("TSOK")
+        expect(response.body).not_to eq("TSOK")
       end
 
     end
@@ -86,8 +86,8 @@ describe Spree::PayoneFrontendController do
       it "does nothing with wrong referer even if all other is correct" do
         @request.env['REMOTE_ADDR'] = "1.2.3"
         spree_post :status, reference: @order.number, param: @order.payone_hash, txaction: "capture", key: Digest::MD5.hexdigest(@thekey)
-        response.body.should_not eql("TSOK")
-        assigns[:order].should be_nil
+        expect(response.body).not_to eq("TSOK")
+        expect(assigns[:order]).to eq(nil)
       end
 
     end
@@ -96,8 +96,8 @@ describe Spree::PayoneFrontendController do
 
       it "does nothing with wrong request type" do
         spree_get :status
-        response.body.should_not eql("TSOK")
-        assigns[:order].should be_nil
+        expect(response.body).not_to eq("TSOK")
+        expect(assigns[:order]).to eq(nil)
       end
 
     end
@@ -106,55 +106,55 @@ describe Spree::PayoneFrontendController do
 
       it "does nothing with wrong payone transaction status key" do
         spree_post :status, reference: @order.number, param: @order.payone_hash, txaction: "capture", key: "blabla"
-        response.body.should_not eql("TSOK")
-        assigns[:order].last_payment.state.should_not eql "completed"
+        expect(response.body).not_to eq("TSOK")
+        expect(assigns[:order].last_payment.state).not_to eq("completed")
       end
 
       it "does not find orders ref number with wrong reference and correct param" do
         spree_post :status, reference: @order.number, param: @order.payone_hash
-        assigns[:order].payone_ref_number.should_not eql (@order.number+"1")
+        expect(assigns[:order].payone_ref_number).not_to eq(@order.number+"1")
       end
 
       it "does not find order with correct reference and wrong param" do
         spree_post :status, reference: @order.number, param: @order.payone_hash+"1"
-        assigns[:order].should be_nil
+        expect(assigns[:order]).to eq(nil)
       end
 
       it "does find order with correct reference and param" do
         spree_post :status, reference: @order.number, param: @order.payone_hash
-        assigns[:order].should_not be_nil
+        expect(assigns[:order]).not_to eq(nil)
       end
 
       it "does nothing with the orders payment with indifferent txaction param" do
         spree_post :status, reference: @order.number, param: @order.payone_hash, txaction: "void", key: @payone_md5_key
-        assigns[:order].last_payment.state.should_not eql "completed"
+        expect(assigns[:order].last_payment.state).not_to eq("completed")
       end
 
       it "does return TSOK with indifferent txaction param" do
         spree_post :status, reference: @order.number, param: @order.payone_hash, txaction: "void", key: @payone_md5_key
-        response.body.should eql("TSOK")
+        expect(response.body).to eq("TSOK")
       end
 
       it "does capture the orders payment when txaction is capture" do
         spree_post :status, reference: @order.number, param: @order.payone_hash, txaction: "capture", key: @payone_md5_key
-        assigns[:order].last_payment.state.should eql "completed"
+        expect(assigns[:order].last_payment.state).to eq("completed")
       end
 
       it "does capture the orders payment when txaction is paid" do
         spree_post :status, reference: @order.number, param: @order.payone_hash, txaction: "paid", key: @payone_md5_key
-        assigns[:order].last_payment.state.should eql "completed"
+        expect(assigns[:order].last_payment.state).to eq("completed")
       end
 
       it "does not capture the orders payment twice when two txaction paid or capture occurs" do
         spree_post :status, reference: @order.number, param: @order.payone_hash, txaction: "capture", key: @payone_md5_key
-        assigns[:order].last_payment.state.should eql "completed"
+        expect(assigns[:order].last_payment.state).to eq("completed")
         spree_post :status, reference: @order.number, param: @order.payone_hash, txaction: "paid", key: @payone_md5_key
-        assigns[:order].last_payment.state.should eql "completed"
+        expect(assigns[:order].last_payment.state).to eq("completed")
       end
 
       it "does return TSOK if the orders payment is captured" do
         spree_post :status, reference: @order.number, param: @order.payone_hash, txaction: "capture", key: @payone_md5_key
-        response.body.should eql("TSOK")
+        expect(response.body).to eq("TSOK")
       end
 
     end

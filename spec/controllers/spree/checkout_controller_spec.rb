@@ -17,16 +17,16 @@ describe Spree::CheckoutController do
     payment = create(:payment, order: order, payment_method: @payone_frontend)
     @payone_exit_param = @payone_frontend.build_payone_exit_param order
 
-    controller.stub :current_order => order
-    controller.stub :try_spree_current_user => user
-    controller.stub :spree_current_user => user
+    allow_any_instance_of(Spree::CheckoutController).to receive(:current_order).and_return(order)
+    allow_any_instance_of(Spree::CheckoutController).to receive(:try_spree_current_user).and_return(user)
+    allow_any_instance_of(Spree::CheckoutController).to receive(:spree_current_user).and_return(user)
   end
 
 #-------------------------------------------------------------------------------------------------
   describe "update checkout state payment with payone payment method" do
 
     it "redirect to correct payone page" do
-      controller.should_receive(:authorize!).with(:edit, order, token)
+      expect(controller).to receive(:authorize!).with(:edit, order, token)
       request.cookie_jar.signed[:guest_token] = token
       spree_post :update,  { :state => 'payment', :order => {:payments_attributes => [{:payment_method_id =>@payone_frontend.id}]}},
                            { :access_token => token }
@@ -34,25 +34,25 @@ describe Spree::CheckoutController do
     end
 
     it "updates order correctly" do
-      controller.should_receive(:authorize!).with(:edit, order, token)
+      expect(controller).to receive(:authorize!).with(:edit, order, token)
       request.cookie_jar.signed[:guest_token] = token
       spree_post :update,  { :state => 'payment', :order => {:payments_attributes => [{:payment_method_id =>@payone_frontend.id}]}},
                            { :access_token => token }
-      assigns[:order].payone_hash.should eql(@payone_exit_param)
+      expect(assigns[:order].payone_hash).to eq(@payone_exit_param)
     end
 
     it "does not update order if wrong payment method assigned" do
       pm = create(:check_payment_method)
-      controller.should_receive(:authorize!).with(:edit, order, token)
+      expect(controller).to receive(:authorize!).with(:edit, order, token)
       request.cookie_jar.signed[:guest_token] = token
       spree_post :update,  { :state => 'payment', :order => {:payments_attributes => [{:payment_method_id =>pm.id}]}},
                            { :access_token => token }
-      assigns[:order].payone_hash.should be_nil
+      expect(assigns[:order].payone_hash).to eq(nil)
     end
 
     it "does not redirect to payone if wrong state given" do
       pm = create(:check_payment_method)
-      controller.should_receive(:authorize!).with(:edit, order, token)
+      expect(controller).to receive(:authorize!).with(:edit, order, token)
       request.cookie_jar.signed[:guest_token] = token
       spree_post :update,  { :state => 'address', :order => {:payments_attributes => [{:payment_method_id =>@payone_frontend.id}]}},
                            { :access_token => token }

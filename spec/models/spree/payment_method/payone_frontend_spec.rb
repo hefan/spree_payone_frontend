@@ -20,16 +20,16 @@ describe Spree::PaymentMethod::PayoneFrontend do
   describe "exit param is encrypted correctly" do
 
     it "exit param is SHA2 of secret key and order number" do
-      @payone_exit_param.should eql(Digest::SHA2.hexdigest("#{@order.number}#{@thekey}"))
+      expect(@payone_exit_param).to eq(Digest::SHA2.hexdigest("#{@order.number}#{@thekey}"))
     end
 
     it "exit param of one order is unequal to exit param of other order" do
       order2 = create(:order_with_line_items)
-      @payone_exit_param.should_not eql(Digest::SHA2.hexdigest("#{order2.number}#{@thekey}"))
+      expect(@payone_exit_param).not_to eq(Digest::SHA2.hexdigest("#{order2.number}#{@thekey}"))
     end
 
     it "exit param of order with manipulated secret key is not equal to regular exit param" do
-      @payone_exit_param.should_not eql(Digest::SHA2.hexdigest("#{@order.number}#{@thekey}2"))
+      expect(@payone_exit_param).not_to eq(Digest::SHA2.hexdigest("#{@order.number}#{@thekey}2"))
     end
 
   end
@@ -37,27 +37,27 @@ describe Spree::PaymentMethod::PayoneFrontend do
   describe "payone frontend built url" do
 
     it "is set" do
-      @payone_frontend.build_url(@order).should_not be_nil
+      expect(@payone_frontend.build_url(@order)).not_to eq(nil)
     end
 
     it "contains the url prefix" do
-      @payone_frontend.build_url(@order).should include(@payone_frontend.preferred_url_prefix)
+      expect(@payone_frontend.build_url(@order)).to include(@payone_frontend.preferred_url_prefix)
     end
 
     it "contains the portal id" do
-      @payone_frontend.build_url(@order).should include(@portal_id)
+      expect(@payone_frontend.build_url(@order)).to include(@portal_id)
     end
 
     it "contains the sub account id" do
-      @payone_frontend.build_url(@order).should include(@sub_account_id)
+      expect(@payone_frontend.build_url(@order)).to include(@sub_account_id)
     end
 
     it "contains the exit param" do
-      @payone_frontend.build_url(@order).should include(@payone_exit_param)
+      expect(@payone_frontend.build_url(@order)).to include(@payone_exit_param)
     end
 
     it "does not contain the secret key" do
-      @payone_frontend.build_url(@order).should_not include(@thekey)
+      expect(@payone_frontend.build_url(@order)).not_to include(@thekey)
     end
 
   end
@@ -65,7 +65,7 @@ describe Spree::PaymentMethod::PayoneFrontend do
   describe "status param key correct" do
     it "is md5 hexdigest of secret key" do
       md5_secret = Digest::MD5.hexdigest(@payone_frontend.preferred_secret_key)
-      @payone_frontend.check_payone_status_param(md5_secret).should be true
+      expect(@payone_frontend.check_payone_status_param(md5_secret)).to eq(true)
     end
   end
 #-------------------------------------------------------------------------------------------------
